@@ -2,126 +2,144 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0c0c1d;
-      --surface: #13132b;
-      --surface2: #1a1a3a;
-      --border: #252550;
-      --text: #e8e8f0;
-      --text2: #8888aa;
-      --accent: #7c6aff;
-      --accent2: #42d9a8;
-      --gradient: linear-gradient(135deg, #7c6aff 0%, #42d9a8 100%);
-      --danger: #ff5c6a;
-      --radius: 10px;
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #18181f;
+      --surface3: #1f1f28;
+      --border: #1e1e2a;
+      --border-hover: #2a2a3a;
+      --text: #dcdce4;
+      --text2: #6b6b80;
+      --text3: #44445a;
+      --accent: #6e56cf;
+      --accent-soft: rgba(110,86,207,0.12);
+      --accent-glow: rgba(110,86,207,0.25);
+      --green: #30a46c;
+      --green-soft: rgba(48,164,108,0.12);
+      --red: #e5484d;
+      --red-soft: rgba(229,72,77,0.1);
+      --orange: #f76b15;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-      width: 360px;
+      font-family: var(--sans);
+      width: 380px;
       background: var(--bg);
       color: var(--text);
+      overflow-x: hidden;
     }
 
-    /* ── Header ── */
-    .header {
-      background: var(--gradient);
-      padding: 18px 20px 14px;
+    /* ── Top bar ── */
+    .topbar {
       display: flex;
       align-items: center;
-      gap: 12px;
+      padding: 14px 18px 12px;
+      border-bottom: 1px solid var(--border);
     }
-    .logo {
-      width: 36px;
-      height: 36px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      backdrop-filter: blur(4px);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.5px;
     }
-    .header-text h1 {
-      font-size: 16px;
+    .brand-name {
+      font-size: 14px;
       font-weight: 700;
       color: #fff;
       letter-spacing: -0.3px;
     }
-    .header-text p {
-      font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      margin-top: 1px;
-    }
-    .version {
+    .brand-tag {
       margin-left: auto;
+      font-family: var(--mono);
       font-size: 10px;
-      color: rgba(255,255,255,0.5);
-      background: rgba(255,255,255,0.12);
-      padding: 2px 8px;
-      border-radius: 20px;
+      color: var(--text3);
+      background: var(--surface2);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
     }
 
-    /* ── Body ── */
-    .body { padding: 16px; }
+    /* ── Content ── */
+    .content { padding: 16px 18px 14px; }
 
     /* ── Status ── */
-    .status-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px 14px;
-      margin-bottom: 14px;
+    .status {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 12.5px;
-      transition: border-color 0.3s;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--text2);
+      transition: all 0.3s ease;
     }
-    .status-card.active { border-color: var(--accent); }
-    .status-card.success { border-color: var(--accent2); }
-    .status-card.error { border-color: var(--danger); }
+    .status.is-active { border-color: var(--accent); background: var(--accent-soft); }
+    .status.is-done { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+    .status.is-error { border-color: var(--red); background: var(--red-soft); color: var(--red); }
 
-    .dot {
-      width: 8px; height: 8px;
+    .status-pip {
+      width: 6px; height: 6px;
       border-radius: 50%;
+      background: var(--text3);
       flex-shrink: 0;
-      background: #555;
     }
-    .dot.idle { background: #555; }
-    .dot.running { background: #ff9800; animation: pulse 1s infinite; }
-    .dot.done { background: var(--accent2); }
-    .dot.error { background: var(--danger); }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .status-pip.running { background: var(--orange); animation: blink 1.2s infinite; }
+    .status-pip.done { background: var(--green); }
+    .status-pip.error { background: var(--red); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
     /* ── Progress ── */
-    .progress {
-      height: 3px;
+    .track {
+      height: 2px;
       background: var(--surface2);
-      border-radius: 2px;
+      border-radius: 1px;
       margin-bottom: 14px;
       overflow: hidden;
       opacity: 0;
       transition: opacity 0.3s;
     }
-    .progress.visible { opacity: 1; }
-    .progress-bar {
+    .track.on { opacity: 1; }
+    .track-fill {
       height: 100%;
-      background: var(--gradient);
-      border-radius: 2px;
       width: 0%;
-      transition: width 0.4s ease;
+      background: var(--accent);
+      border-radius: 1px;
+      transition: width 0.5s ease;
     }
 
-    /* ── Buttons ── */
-    .btn {
+    /* ── Primary action ── */
+    .action-btn {
       width: 100%;
-      padding: 11px 16px;
-      border: none;
-      border-radius: var(--radius);
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--sans);
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
@@ -129,198 +147,265 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s;
-      font-family: inherit;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
-    .btn:active:not(:disabled) { transform: scale(0.98); }
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent), #30a46c);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .action-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .action-btn:hover:not(:disabled)::before { opacity: 0.08; }
+    .action-btn:active:not(:disabled) { transform: scale(0.985); }
+    .action-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .action-btn span { position: relative; z-index: 1; }
+    .action-btn .icon { font-size: 14px; }
 
-    .btn-primary {
-      background: var(--gradient);
-      color: #fff;
-    }
-    .btn-primary:hover:not(:disabled) {
-      box-shadow: 0 4px 20px rgba(124,106,255,0.4);
-      transform: translateY(-1px);
-    }
+    /* ── Results ── */
+    .results { margin-top: 16px; }
 
-    .btn-ghost {
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .stat-card {
+      flex: 1;
       background: var(--surface);
-      color: var(--text2);
       border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
     }
-    .btn-ghost:hover:not(:disabled) { background: var(--surface2); color: var(--text); }
+    .stat-val {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      color: var(--text3);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
 
-    /* ── Download grid ── */
-    .download-grid {
+    /* Export buttons */
+    .exports {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      margin-top: 12px;
+      margin-bottom: 12px;
     }
-    .dl-btn {
+    .exp-btn {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 4px;
+      padding: 10px 0;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
+      transition: all 0.15s ease;
+      font-family: var(--sans);
       color: var(--text);
     }
-    .dl-btn:hover { background: var(--surface2); border-color: var(--accent); transform: translateY(-1px); }
-    .dl-btn .dl-icon { font-size: 18px; display: block; margin-bottom: 4px; }
-    .dl-btn .dl-label { font-size: 10px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
-
-    /* ── Search ── */
-    .search-box {
-      position: relative;
-      margin-top: 12px;
+    .exp-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
     }
-    .search-box input {
+    .exp-btn:active { transform: scale(0.97); }
+    .exp-ext {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      display: block;
+      color: #fff;
+    }
+    .exp-desc {
+      font-size: 9px;
+      color: var(--text3);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .search-wrap input {
       width: 100%;
+      height: 36px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 9px 12px 9px 34px;
+      border-radius: 8px;
+      padding: 0 36px 0 34px;
       color: var(--text);
+      font-family: var(--sans);
       font-size: 12px;
-      font-family: inherit;
       outline: none;
       transition: border-color 0.2s;
     }
-    .search-box input:focus { border-color: var(--accent); }
-    .search-box input::placeholder { color: var(--text2); }
-    .search-icon {
+    .search-wrap input:focus { border-color: var(--accent); }
+    .search-wrap input::placeholder { color: var(--text3); }
+    .search-wrap .s-icon {
       position: absolute;
-      left: 11px;
-      top: 50%;
+      left: 12px; top: 50%;
       transform: translateY(-50%);
-      font-size: 13px;
-      color: var(--text2);
+      font-size: 12px;
+      color: var(--text3);
       pointer-events: none;
     }
-    .search-count {
+    .search-wrap .s-count {
       position: absolute;
-      right: 10px;
-      top: 50%;
+      right: 10px; top: 50%;
       transform: translateY(-50%);
+      font-family: var(--mono);
       font-size: 10px;
-      color: var(--text2);
+      color: var(--text3);
     }
 
-    /* ── Preview ── */
-    .preview {
+    /* Preview */
+    .preview-box {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      margin-top: 10px;
-      max-height: 180px;
+      border-radius: 8px;
+      max-height: 170px;
       overflow-y: auto;
-      font-size: 11.5px;
-      line-height: 1.6;
       padding: 10px 12px;
+      font-size: 11px;
+      line-height: 1.7;
       color: var(--text2);
       scrollbar-width: thin;
-      scrollbar-color: var(--surface2) transparent;
+      scrollbar-color: var(--surface3) transparent;
     }
-    .preview::-webkit-scrollbar { width: 5px; }
-    .preview::-webkit-scrollbar-track { background: transparent; }
-    .preview::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
-    .preview .line { padding: 2px 0; }
-    .preview .speaker { color: var(--accent); font-weight: 600; }
-    .preview .time { color: var(--text2); font-size: 10px; }
-    .preview .highlight { background: rgba(124,106,255,0.3); border-radius: 2px; padding: 0 2px; }
+    .preview-box::-webkit-scrollbar { width: 4px; }
+    .preview-box::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+    .preview-box .p-line { padding: 1px 0; }
+    .preview-box .p-time {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+    }
+    .preview-box .p-who {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .preview-box .p-hl {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 2px;
+      padding: 0 2px;
+    }
 
-    /* ── Stats bar ── */
-    .stats-bar {
+    /* Copy button */
+    .copy-btn {
+      width: 100%;
+      height: 36px;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text2);
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 16px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
+      gap: 6px;
+      transition: all 0.15s ease;
     }
-    .stat { text-align: center; }
-    .stat-value { font-size: 16px; font-weight: 700; color: var(--accent); }
-    .stat-label { font-size: 10px; color: var(--text2); margin-top: 1px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .copy-btn:hover { border-color: var(--border-hover); color: var(--text); background: var(--surface2); }
 
-    /* ── Sections show/hide ── */
+    /* ── Utility ── */
     .hidden { display: none !important; }
 
-    /* ── Footer ── */
     .footer {
       text-align: center;
-      padding: 8px;
+      padding: 10px 18px;
+      border-top: 1px solid var(--border);
       font-size: 10px;
-      color: #444;
+      color: var(--text3);
+      font-family: var(--mono);
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo">📝</div>
-    <div class="header-text">
-      <h1>TeamScript</h1>
-      <p>Teams + Transcript</p>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">TS</div>
+      <span class="brand-name">TeamScript</span>
     </div>
-    <span class="version">v1.0</span>
+    <span class="brand-tag">v1.0</span>
   </div>
 
-  <div class="body">
-    <div class="status-card" id="statusCard">
-      <div class="dot idle" id="dot"></div>
-      <span id="statusText">Clique em Extrair para capturar a transcrição</span>
+  <div class="content">
+    <div class="status" id="statusCard">
+      <div class="status-pip" id="pip"></div>
+      <span id="statusText">Abra a transcrição no Teams e clique extrair</span>
     </div>
 
-    <div class="progress" id="progress">
-      <div class="progress-bar" id="progressBar"></div>
+    <div class="track" id="track">
+      <div class="track-fill" id="trackFill"></div>
     </div>
 
-    <button class="btn btn-primary" id="btnExtract">
-      <span>⚡</span> Extrair Transcrição
+    <button class="action-btn" id="btnExtract">
+      <span class="icon">↓</span>
+      <span>Extrair Transcrição</span>
     </button>
 
-    <!-- Post-extraction UI -->
-    <div id="resultsSection" class="hidden">
-      <div class="stats-bar">
-        <div class="stat">
-          <div class="stat-value" id="statEntries">0</div>
-          <div class="stat-label">Entradas</div>
+    <div class="results hidden" id="resultsSection">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-val" id="statEntries">0</div>
+          <div class="stat-lbl">Entradas</div>
         </div>
-        <div class="stat">
-          <div class="stat-value" id="statSpeakers">0</div>
-          <div class="stat-label">Participantes</div>
+        <div class="stat-card">
+          <div class="stat-val" id="statSpeakers">0</div>
+          <div class="stat-lbl">Pessoas</div>
         </div>
-        <div class="stat">
-          <div class="stat-value" id="statDuration">—</div>
-          <div class="stat-label">Duração</div>
+        <div class="stat-card">
+          <div class="stat-val" id="statDuration">—</div>
+          <div class="stat-lbl">Duração</div>
         </div>
       </div>
 
-      <div class="download-grid">
-        <button class="dl-btn" id="btnTxt"><span class="dl-icon">📄</span><span class="dl-label">TXT</span></button>
-        <button class="dl-btn" id="btnMd"><span class="dl-icon">📝</span><span class="dl-label">MD</span></button>
-        <button class="dl-btn" id="btnSrt"><span class="dl-icon">🎬</span><span class="dl-label">SRT</span></button>
-        <button class="dl-btn" id="btnJson"><span class="dl-icon">📦</span><span class="dl-label">JSON</span></button>
+      <div class="exports">
+        <button class="exp-btn" id="btnTxt"><span class="exp-ext">.txt</span><span class="exp-desc">Texto</span></button>
+        <button class="exp-btn" id="btnMd"><span class="exp-ext">.md</span><span class="exp-desc">Markdown</span></button>
+        <button class="exp-btn" id="btnSrt"><span class="exp-ext">.srt</span><span class="exp-desc">Legenda</span></button>
+        <button class="exp-btn" id="btnJson"><span class="exp-ext">.json</span><span class="exp-desc">Dados</span></button>
       </div>
 
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
+      <div class="search-wrap">
+        <span class="s-icon">⌕</span>
         <input type="text" id="searchInput" placeholder="Buscar na transcrição..." />
-        <span class="search-count hidden" id="searchCount"></span>
+        <span class="s-count hidden" id="searchCount"></span>
       </div>
 
-      <div class="preview hidden" id="preview"></div>
+      <div class="preview-box hidden" id="preview"></div>
 
-      <button class="btn btn-ghost" id="btnCopy" style="margin-top:10px">
-        📋 Copiar tudo
+      <button class="copy-btn" id="btnCopy">
+        ⎘ Copiar tudo
       </button>
     </div>
   </div>
 
-  <div class="footer">TeamScript &mdash; open source</div>
+  <div class="footer">teams + transcript</div>
   <script src="popup.js"></script>
 </body>
 </html>
